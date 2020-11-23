@@ -4,39 +4,69 @@
 
 using namespace std;
 
-void Zipping(){
-    char path[] = "";
-    char command_zip[] = "cd /D ";
+void Tarring(){
+    string zip_path;
+    string arch_name;
+    string storage_path = R"(C:\ProgramData\TarManager)";
 
+    system("cls");
     cout << "Put a path to a directory to archive: ";
-    cin >> path;
-    cout << path << endl;
+    cin >> zip_path;
 
-    char final_command[256];
-    strcat(final_command, command_zip);
-    strcat(final_command, path);
+    cout << "Put a name for your archive: ";
+    cin >> arch_name;
 
-    cout << final_command << " " << typeid(final_command).name() << endl;
-
-    system(final_command);
-    system(R"(echo %cd%)");
-
-//    cout << "Zipping is started..." << endl;
-//    string tar = "tar cvf myTAR.tar *";
-//    system(tar.c_str());
-//    cout << "Zipping has finished. You can find .tar in directory" << endl;
-
-    cin >> path;
-    cin.get();
+    cout << "Zipping is started..." << endl;
+    string zip_raw_command = "tar cvf " + storage_path + "\\" + arch_name + ".tar " + zip_path; // How to make this more beautiful/skillful?
+    const char * zip_final_command = zip_raw_command.c_str();
+    system(R"(mkdir C:\ProgramData\TarManager)");
+    system(zip_final_command);
+    cout << "Zipping has finished. Path to your archive: " << storage_path + "\\" + arch_name + ".tar" << endl; // Also that one
+    system("pause");
 }
 
-void Unzipping(){
-    cout << "Unzipping is started..." << endl;
-    system(R"(tar xvf C:\Users\tard\Desktop\emojis\myTAR.tar -C C:\Users\tard\Desktop\papka)");
+void Untarring(){
+    string tarfile_path;
+    string unzip_path;
+
+    system("cls");
+    cout << "Put a path to your .tar WITH .tar in it : ";
+    cin >> tarfile_path;
+
+    cout << "Put a path to directory where you want to extract your .tar : ";
+    cin >> unzip_path;
+
+    cout << "Untarring is started..." << endl;
+    string unzip_raw_command = "tar xvf " + tarfile_path + " -C " + unzip_path;
+    const char * unzip_final_command = unzip_raw_command.c_str();
+    system(unzip_final_command);
+    cout << "Untarring finished. You can find files in your directory. If any errors aquired, try again." << endl;
+    system("pause");
+}
+
+void Menu(){
+    int choose;
+
+    system("cls");
+    cout << " Welcome to TarManager. Choose one of proposed options: " << endl;
+    cout << " [1] - to tar your files; \n [2] - to untar your archive into a directory; " << endl;
+    cout << " Your choise: ";
+    cin >> choose;
+    if (choose == 1){
+        Tarring();
+    }else if(choose == 2){
+        Untarring();
+    }else{
+        cout << "There is no option under this number." << endl;
+    }
+    system("pause");
 }
 
 int main()
 {
-    Zipping();
+    while (true){
+        system("cls");
+        Menu();
+    }
     return 0;
 }
