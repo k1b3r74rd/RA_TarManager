@@ -1,3 +1,5 @@
+// Written by Zolotarev Maxim. Разработано Золотаревым Максимом.
+
 #include <iostream>
 #include <stdio.h>
 #include <cstring>
